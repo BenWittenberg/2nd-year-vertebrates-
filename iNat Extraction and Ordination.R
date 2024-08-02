@@ -272,6 +272,43 @@ matrix$Shannon <- diversity(matrix[2:52])
 #Univariate diversity indices tell us nothing about composition between sites. You can have identical diversity scores but share none of the same species. So we'll do what's called an ordination 
 
 
+#First get the species matrix on it's own 
+Spp <- matrix[,2:52]
+
+#Note that this analysis will not like any regionjs where no species were detected, but that shouldn't be a problem as none of our reserves had an alpha diversity = 0 
+
+SppMDS <- metaMDS(Spp, distance = "bray", k=2)
+plot(SppMDS, type = "t")
+
+#Now we extract the values from this and assign them to the original dataset 
+scores <- as.data.frame(scores(SppMDS)$sites)
+
+scores$region <- matrix$region
+
+#Now we can make a pretty plot 
+
+ggplot(scores, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 4, aes(colour = region))+ 
+  theme(axis.text.y = element_text(colour = "black", size = 12, face = "bold"), 
+        axis.text.x = element_text(colour = "black", face = "bold", size = 12), 
+        legend.text = element_text(size = 12, face ="bold", colour ="black"), 
+        legend.position = "right", axis.title.y = element_text(face = "bold", size = 14), 
+        axis.title.x = element_text(face = "bold", size = 14, colour = "black"), 
+        legend.title = element_text(size = 14, colour = "black", face = "bold"), 
+        panel.background = element_blank(), panel.border = element_rect(colour = "black", fill = NA,       size = 1.2),
+        legend.key=element_blank()) + 
+  labs(x = "NMDS1", colour = "Protected area", y = "NMDS2", shape = "Type")  + 
+  scale_colour_manual(values = c("orange", "blue","green","red","lightblue","lightgrey","pink","darkblue","lightgreen","darkgreen","yellow","magenta"))
+
+#Look at R charts if you want to change the colour pallete
+#You can also adjust the opacity to get pastel shades using the alpha = function 
+
+#But now we need to check that there actually is a difference 
+
+#Usually we'd use an anosim for this, but that requires there to be replicates within groups, so we will save that fopr when we get the camera trap data 
+
+
+
 
 
 
