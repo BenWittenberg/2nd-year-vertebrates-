@@ -237,6 +237,7 @@ table(df[df$region == "Blaauwberg",8])#column 8 is the common name column, we co
 #To shorten things I've made a data frame for us: 
 
 matrix <- read.csv("Mammal_matrix.csv")
+View(matrix)
 
 #remove the marine mammals - this isn't looking at those 
 #remove the bats - we also aren't looking at those 
@@ -308,8 +309,32 @@ ggplot(scores, aes(x = NMDS1, y = NMDS2)) +
 #Usually we'd use an anosim for this, but that requires there to be replicates within groups, so we will save that fopr when we get the camera trap data 
 
 
+###################################################################################################################################################
+
+#Plotting 
+
+#Make sure we have some pretty colours :) 
+#Try keep the same palette from outr ordination plot 
+
+colour_pallete <- c("orange", "blue","green","red","lightblue","lightgrey","pink","darkblue","lightgreen","darkgreen","yellow","magenta")
 
 
+ggplot() + 
+  annotation_map_tile(type = "osm", progress = "none", zoomin = -1)+
+  layer_spatial(Blaauw, fill = "orange", alpha = 0.4)+
+  layer_spatial(Brack, fill = "blue", alpha = 0.4)+
+  layer_spatial(FBNR, fill = "green", alpha = 0.4)+
+  layer_spatial(Held, fill = "red", alpha = 0.4)+
+  layer_spatial(Ken, fill = "lightblue", alpha = 0.4)+
+  layer_spatial(SB, fill = "lightgrey", alpha = 0.4)+
+  layer_spatial(TB, fill = "pink", alpha = 0.4)+
+  layer_spatial(Tyg, fill = "darkblue", alpha = 0.4)+
+  layer_spatial(Uit, fill = "lightgreen", alpha = 0.4)+
+  layer_spatial(Wolf, fill = "darkgreen", alpha = 0.4)+
+  layer_spatial(Wit, fill = "yellow", alpha = 0.4)+
+  layer_spatial(Zand, fill = "magenta", alpha = 0.4)
+  
+  
 
 
 
